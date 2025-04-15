@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>모듈러 건축 실험실</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #1e3a8a;
+    }
+
+    img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    .quiz-box, .scenario-box {
+      display: none;
+    }
+
+    .quiz-status {
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    .result {
+      font-weight: bold;
+      color: #10b981;
+    }
+
+    .choice-btn {
+      display: block;
+      background-color: #e5e7eb;
+      color: #111827;
+      margin: 8px 0;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 5px;
+      text-align: left;
+    }
+
+    .choice-btn:hover {
+      background-color: #dbeafe;
+    }
+
+    .indicator {
+      display: inline-block;
+      margin-right: 5px;
+      font-weight: bold;
+    }
+
+    .correct {
+      color: #10b981;
+    }
+
+    .incorrect {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>모듈러 건축 실험실</h1>
+    <p>개념 ✦ 사례 ✦ 퀴즈 ✦ 테스트</p>
+  </header>
+
+  <div class="container">
+
+    <!-- 개념 및 사례 -->
+    <section>
+      <h2>모듈러 건축이란?</h2>
+      <p>모듈러 건축은 미리 제작된 건축 모듈을 조립하여 건물을 완성하는 방식으로, 시공 기간을 단축하고 자재 낭비를 줄이며 친환경적입니다.</p>
+      <h3>🌍 실제 사례</h3>
+      <ul>
+        <li><strong>영국:</strong> <em>Module-AR</em> 시스템을 사용한 런던의 임시 주택 프로젝트</li>
+        <li><strong>싱가포르:</strong> <em>Clement Canopy</em> – 세계에서 가장 높은 모듈러 아파트 (40층)</li>
+        <li><strong>한국:</strong> 서울 도심 내 모듈러 임시 학교 설치 (신속한 구축 목적)</li>
+      </ul>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Modular_home_construction.jpg/1280px-Modular_home_construction.jpg" alt="모듈러 건축 이미지">
+    </section>
+
+    <!-- 퀴즈 영역 -->
+    <section>
+      <h2>🔍 모듈러 건축 퀴즈</h2>
+      <div id="quiz-container">
+        <div class="quiz-box" id="quiz-box"></div>
+        <div id="quiz-status" class="quiz-status"></div>
+        <div id="quiz-result" class="result"></div>
+        <div id="quiz-indicator"></div>
+      </div>
+      <button onclick="startQuiz()">퀴즈 시작하기</button>
+    </section>
+
+    <!-- 시나리오 테스트 -->
+    <section>
+      <h2>🧠 모듈러 건축 테스트</h2>
+      <div id="scenario-box" class="scenario-box"></div>
+      <div id="scenario-result" class="result"></div>
+      <button onclick="startScenario()">시나리오 기반 테스트 시작</button>
+    </section>
+  </div>
+
+  <script>
+    // 퀴즈 기능
+    const quizData = [
+      {
+        q: "모듈러 건축의 장점으로 가장 적절한 것은?",
+        options: ["높은 건축비", "긴 시공 시간", "자재 낭비 감소", "복잡한 설계"],
+        answer: 2
+      },
+      {
+        q: "싱가포르의 대표적인 모듈러 건축물은?",
+        options: ["Marina Bay Sands", "Clement Canopy", "The Hive", "Sky Habitat"],
+        answer: 1
+      },
+      {
+        q: "모듈러 건축이 특히 유리한 상황은?",
+        options: ["복잡한 곡면 구조물", "지진 위험 지역", "장기간 공사", "단기간에 시공이 필요한 경우"],
+        answer: 3
+      },
+      {
+        q: "모듈러 건축에서 모듈은 보통 어떻게 제작되는가?",
+        options: ["현장에서 수작업", "공장에서 사전 제작", "3D 프린터 출력", "자동차 부품과 조합"],
+        answer: 1
+      },
+      {
+        q: "다음 중 모듈러 건축물로 보기 어려운 것은?",
+        options: ["이동식 주택", "컨테이너 건축물", "천년고찰", "임시 병원"],
+        answer: 2
+      }
+    ];
+
+    let quizIndex = 0;
+    let correctCount = 0;
+
+    function startQuiz() {
+      quizIndex = 0;
+      correctCount = 0;
+      document.getElementById('quiz-result').innerText = '';
+      document.getElementById('quiz-indicator').innerHTML = '';
+      showQuiz();
+    }
+
+    function showQuiz() {
+      const qBox = document.getElementById('quiz-box');
+      const qData = quizData[quizIndex];
+      qBox.innerHTML = `<h3>${quizIndex + 1}. ${qData.q}</h3>`;
+      qData.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(idx);
+        qBox.appendChild(btn);
+      });
+      qBox.style.display = 'block';
+      document.getElementById('quiz-status').innerText = `문제 ${quizIndex + 1} / ${quizData.length}`;
+    }
+
+    function checkAnswer(selected) {
+      const correct = quizData[quizIndex].answer;
+      const indicator = document.createElement('span');
+      indicator.className = 'indicator ' + (selected === correct ? 'correct' : 'incorrect');
+      indicator.textContent = selected === correct ? '⭕' : '❌';
+      document.getElementById('quiz-indicator').appendChild(indicator);
+      if (selected === correct) correctCount++;
+      quizIndex++;
+      if (quizIndex < quizData.length) {
+        setTimeout(showQuiz, 300);
+      } else {
+        document.getElementById('quiz-box').style.display = 'none';
+        document.getElementById('quiz-status').innerText = '';
+        document.getElementById('quiz-result').innerText = `총 ${quizData.length}문제 중 ${correctCount}문제 맞췄습니다!`;
+      }
+    }
+
+    // 시나리오 기반 테스트
+    const scenarioData = [
+      {
+        question: "당신은 도심에 급하게 병원을 지어야 하는 상황입니다. 어떤 건축 방식을 선택하시겠습니까?",
+        options: [
+          { text: "모듈러 건축", next: 1 },
+          { text: "기존 전통 건축", next: 99 }
+        ]
+      },
+      {
+        question: "공장 제작 후 현장 조립으로 진행됩니다. 설계는 어떻게 하시겠습니까?",
+        options: [
+          { text: "표준화된 모듈 설계", next: 2 },
+          { text: "현장에서 상황 봐가며 설계", next: 99 }
+        ]
+      },
+      {
+        question: "빠르게 시공 완료! 최종 결과는?",
+        options: [
+          { text: "성공적으로 병원 완공!", next: 100 },
+          { text: "건물 품질에 이슈 발생", next: 99 }
+        ]
+      }
+    ];
+
+    function startScenario() {
+      currentScenario = 0;
+      document.getElementById('scenario-result').innerText = '';
+      showScenario();
+    }
+
+    let currentScenario = 0;
+
+    function showScenario() {
+      const box = document.getElementById('scenario-box');
+      box.innerHTML = `<h3>${scenarioData[currentScenario].question}</h3>`;
+      scenarioData[currentScenario].options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = opt.text;
+        btn.onclick = () => {
+          if (opt.next === 100) {
+            document.getElementById('scenario-result').innerText = "✅ 테스트 결과: 모듈러 건축으로 빠르고 효율적으로 성공!";
+            box.innerHTML = '';
+          } else if (opt.next === 99) {
+            document.getElementById('scenario-result').innerText = "❌ 테스트 결과: 비효율적인 설계로 공사 지연 발생!";
+            box.innerHTML = '';
+          } else {
+            currentScenario = opt.next;
+            showScenario();
+          }
+        };
+        box.appendChild(btn);
+      });
+      box.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
